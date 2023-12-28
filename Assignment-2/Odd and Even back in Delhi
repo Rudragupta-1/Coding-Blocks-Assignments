@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        while(n-->0)
+        {
+            int n1=sc.nextInt();
+            int os=0,es=0;
+            String s=String.valueOf(n1);
+            for(int i=0;i<s.length();i++)
+            {
+                int x=Character.getNumericValue(s.charAt(i));
+                if(x%2==0)
+                es+=x;
+                else os+=x;
+                
+            }
+            if(os%3==0 || es%4==0)
+                System.out.println("Yes");
+                else System.out.println("No");
+        }
+
+    }
+}
