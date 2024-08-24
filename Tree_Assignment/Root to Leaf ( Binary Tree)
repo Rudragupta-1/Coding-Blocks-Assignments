@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Main {
+    private class Node {
+        int data;
+        Node left;
+        Node right;
+        Node(int data, Node left, Node right) {
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    private Node root;
+    int size;
+
+    public Main(Scanner scn) {
+        this.root = this.takeInput(scn, null, false);
+    }
+
+    private Node takeInput(Scanner scn, Node parent, boolean isLeft) {
+        if (!scn.hasNextInt()) {
+            return null;
+        }
+        int cData = scn.nextInt();
+        Node child = new Node(cData, null, null);
+        this.size++;
+        if (scn.hasNextBoolean() && scn.nextBoolean()) {
+            child.left = this.takeInput(scn, child, true);
+        }
+        if (scn.hasNextBoolean() && scn.nextBoolean()) {
+            child.right = this.takeInput(scn, child, false);
+        }
+        return child;
+    }
+
+    public void rootToLeaf(int k) {
+        List<Integer> l = new ArrayList<>();
+        pathPrint(l, 0, this.root, k);
+    }
+
+    public void pathPrint(List<Integer> l, int sum, Node node, int k) {
+        if (node == null) return;
+        l.add(node.data);
+        sum += node.data;
+        if (node.left == null && node.right == null && k == sum) {
+            for(int i=0;i<l.size();i++){
+				System.out.printf("%d ",l.get(i));
+			}
+        } else {
+            pathPrint(l, sum, node.left, k);
+            pathPrint(l, sum, node.right, k);
+        }
+        l.remove(l.size() - 1);
+    }
+
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        Main b1 = new Main(scn);
+        if (scn.hasNextInt()) {
+            int k = scn.nextInt();
+            b1.rootToLeaf(k);
+        } 
+        scn.close();
+    }
+}

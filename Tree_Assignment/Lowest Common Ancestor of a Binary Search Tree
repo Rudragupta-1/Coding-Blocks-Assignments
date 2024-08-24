@@ -1,0 +1,77 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Number of nodes
+        int n = sc.nextInt();
+        BinarySearchTree bst = new BinarySearchTree();
+        
+        // Insert nodes into the BST
+        for (int i = 0; i < n; i++) {
+            int nodeValue = sc.nextInt();
+            bst.insert(nodeValue);
+        }
+        
+        // Read the two nodes whose LCA is to be found
+        int p = sc.nextInt();
+        int q = sc.nextInt();
+        
+        // Find and print the LCA
+        TreeNode lca = bst.lowestCommonAncestor(bst.root, p, q);
+        System.out.println(lca.val);
+        
+        sc.close();
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+class BinarySearchTree {
+    TreeNode root;
+    
+    // Function to insert a node into the BST
+    public void insert(int val) {
+        root = insertRec(root, val);
+    }
+    
+    private TreeNode insertRec(TreeNode root, int val) {
+        if (root == null) {
+            root = new TreeNode(val);
+            return root;
+        }
+        
+        if (val < root.val) {
+            root.left = insertRec(root.left, val);
+        } else if (val > root.val) {
+            root.right = insertRec(root.right, val);
+        }
+        
+        return root;
+    }
+    
+    // Function to find the Lowest Common Ancestor (LCA)
+    public TreeNode lowestCommonAncestor(TreeNode root, int p, int q) {
+        if(root==null) return null;
+		if(root.val==p || root.val==q){
+			return root;
+		}
+		TreeNode l=lowestCommonAncestor(root.left,p,q);
+		TreeNode r=lowestCommonAncestor(root.right,p,q);
+		if(l!=null && r!=null){
+			return root;
+		}
+		else if(l!=null){
+			return l;
+		}
+		else return r;
+    }
+}

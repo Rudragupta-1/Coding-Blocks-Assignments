@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int val) {
+        this.val = val;
+        left = right = null;
+    }
+}
+
+class BST {
+
+    // Function to construct the BST from inorder array
+    public TreeNode constructBSTFromInorder(int[] inorder, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+		int mid = (start + end) / 2;
+        TreeNode node = new TreeNode(inorder[mid]);
+		node.left = constructBSTFromInorder(inorder, start, mid - 1);
+        node.right = constructBSTFromInorder(inorder, mid + 1, end);
+
+        return node;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+		 int n = scanner.nextInt();
+        int[] inorder = new int[n];
+		 for (int i = 0; i < n; i++) {
+            inorder[i] = scanner.nextInt();
+        }
+        BST tree = new BST();
+        TreeNode root = tree.constructBSTFromInorder(inorder, 0, n - 1);
+		function(root);
+		function1(root);
+    }
+	static int sum=0;
+	public static void function(TreeNode root){
+		if(root==null) return;
+		function(root.right);
+		sum+=root.val;
+		root.val=sum;
+		function(root.left);
+	}
+	public static void function1(TreeNode root){
+		if(root==null) return;
+		System.out.printf("%d ",root.val);
+		function1(root.left);
+		function1(root.right);
+	}
+}
